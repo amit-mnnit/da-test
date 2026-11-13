@@ -1,0 +1,97 @@
+body {
+  margin: 0;
+  padding: 8px;
+  font-family: 'Adobe Clean', adobe-clean, sans-serif;
+  font-size: 13px;
+}
+
+h4 {
+  margin: 12px 0 6px;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+button {
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px solid #999;
+  border-radius: 14px;
+  background: #fff;
+  padding: 4px 12px;
+}
+
+button:hover,
+button[aria-pressed='true'] {
+  background: #e8e8e8;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+button.primary {
+  background: #1473e6;
+  border-color: #1473e6;
+  color: #fff;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.grid button {
+  border-radius: 4px;
+  text-align: left;
+}
+
+.basket {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+}
+
+.basket li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.basket .name {
+  flex: 1;
+  min-width: 0;
+}
+
+.basket .name small {
+  color: #666;
+  display: block;
+}
+
+.basket button {
+  padding: 0 6px;
+  border-radius: 4px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.empty {
+  color: #666;
+}
+
+.status {
+  margin-top: 8px;
+  color: #107c10;
+}
