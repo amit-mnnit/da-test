@@ -1,12 +1,12 @@
 import { createOptimizedPicture, loadCSS } from '../../scripts/aem.js';
 import transferRepeatableDOM, { insertAddButton, insertRemoveButton } from './components/repeat/repeat.js';
-import {
-  emailPattern, getSubmitBaseUrl, SUBMISSION_SERVICE, SUPPORTED_SUBMISSION_ACTION_TYPES,
-} from './constant.js';
+import { emailPattern, getSubmitBaseUrl, SUBMISSION_SERVICE } from './constant.js';
 import GoogleReCaptcha from './integrations/recaptcha.js';
 import componentDecorator from './mappings.js';
 import { handleSubmit } from './submit.js';
+import DocBasedFormToAF from './transform.js';
 import {
+  checkValidation,
   createButton,
   createDropdownUsingEnum,
   createFieldWrapper,
@@ -306,6 +306,22 @@ export async function generateFormRendition(panel, container, formId, getItems =
   await componentDecorator(container, panel, null, formId);
 }
 
+function enableValidation(form) {
+  form.querySelectorAll('input,textarea,select').forEach((input) => {
+    input.addEventListener('invalid', (event) => {
+      checkValidation(event.target);
+    });
+  });
+
+  form.addEventListener('change', (event) => {
+    checkValidation(event.target);
+  });
+}
+
+function isDocumentBasedForm(formDef) {
+  return formDef?.[':type'] === 'sheet' && formDef?.data;
+}
+
 async function createFormForAuthoring(formDef) {
   const form = document.createElement('form');
   await generateFormRendition(formDef, form, formDef.id, (container) => {
@@ -317,11 +333,11 @@ async function createFormForAuthoring(formDef) {
   return form;
 }
 
-export async function createForm(formDef, data) {
+export async function createForm(formDef, data, source = 'aem') {
   const { action: formPath } = formDef;
   const form = document.createElement('form');
   form.dataset.action = formPath;
-  form.dataset.source = 'aem';
+  form.dataset.source = source;
   form.noValidate = true;
   if (formDef.appliedCssClassNames) {
     form.className = formDef.appliedCssClassNames;
@@ -344,6 +360,10 @@ export async function createForm(formDef, data) {
     captcha.loadCaptcha(form);
   }
 
+  // Only enable DOM validation for doc-based forms; edge forms use the model.
+  if (source === 'sheet') {
+    enableValidation(form);
+  }
   transferRepeatableDOM(form, formDef, form, formId);
 
   if (afModule && typeof Worker === 'undefined') {
@@ -353,7 +373,8 @@ export async function createForm(formDef, data) {
   }
 
   form.addEventListener('reset', async () => {
-    const response = await createForm(formDef);
+    const currentSource = form.dataset.source || 'aem';
+    const response = await createForm(formDef, undefined, currentSource);
     if (response?.form) {
       document.querySelector(`[data-action="${form?.dataset?.action}"]`)?.replaceWith(response?.form);
     }
@@ -402,12 +423,20 @@ function decode(rawContent) {
 
 function extractFormDefinition(block) {
   let formDef;
-  const container = block.querySelector('pre');
-  const codeEl = container?.querySelector('code');
-  const content = codeEl?.textContent;
-  if (content) {
+  let container = block.querySelector('pre');
+  if (container) {
+    const codeEl = container?.querySelector('code');
+    const content = codeEl?.textContent;
+    if (content) {
+      formDef = decode(content);
+    }
+  } else {
+    container = block.querySelector('div div');
+    const codeEl = container?.querySelector('p');
+    const content = codeEl?.textContent;
     formDef = decode(content);
   }
+
   return { container, formDef };
 }
 
@@ -490,57 +519,6 @@ function loadFormCustomStyles(formDef) {
   }
 }
 
-function shouldRouteToSubmissionService(actionType) {
-  return SUPPORTED_SUBMISSION_ACTION_TYPES.includes(actionType);
-}
-
-async function setupForm(formDef, { pathname, editMode = false } = {}) {
-  const submitProps = formDef?.properties?.['fd:submit'];
-  const actionType = submitProps?.actionName || formDef?.properties?.actionType;
-  if (shouldRouteToSubmissionService(actionType) && submitProps?.configUrl) {
-    // forms authored in documents (DA): the submission service reads the submit configuration
-    // from a published sheet of the site (Submit row plus submit-action-* sheets)
-    const { pathname: sheetPath } = new URL(submitProps.configUrl, window.location.href);
-    formDef.action = SUBMISSION_SERVICE + btoa(sheetPath.endsWith('.json') ? sheetPath : `${sheetPath}.json`);
-  } else if (shouldRouteToSubmissionService(actionType)) {
-    // Check if we're in an iframe and use parent window path if available
-    const iframePath = window.frameElement ? window.parent.location.pathname
-      : window.location.pathname;
-    formDef.action = SUBMISSION_SERVICE + btoa(pathname || iframePath);
-  } else {
-    formDef.action = getSubmitBaseUrl() + (formDef.action || '');
-  }
-
-  let form;
-  let afbForm;
-
-  loadFormCustomStyles(formDef);
-  afModule = await import('./rules/index.js');
-  addRequestContextToForm(formDef);
-  if (afModule && afModule.initAdaptiveForm && !editMode) {
-    ({ form, afbForm } = await afModule.initAdaptiveForm(formDef, createForm));
-  } else {
-    form = await createFormForAuthoring(formDef);
-  }
-  form.dataset.source = 'aem';
-  form.dataset.rules = true;
-  if (formDef.properties && formDef.properties['fd:path']) {
-    form.dataset.formpath = formDef.properties['fd:path'];
-  }
-
-  form.dataset.redirectUrl = formDef.redirectUrl || '';
-  form.dataset.thankYouMsg = formDef.thankYouMsg || '';
-  form.dataset.action = formDef.action || pathname?.split('.json')[0];
-  form.dataset.id = formDef.id;
-  return { form, afbForm };
-}
-
-export async function renderForm(formDef, element) {
-  const { form, afbForm } = await setupForm(formDef);
-  element.appendChild(form);
-  return { form, afbForm };
-}
-
 export default async function decorate(block) {
   let container = block.querySelector('a[href]');
   let formDef;
@@ -551,21 +529,52 @@ export default async function decorate(block) {
   } else {
     ({ container, formDef } = extractFormDefinition(block));
   }
+  let source = 'aem';
+  let rules = true;
   let form;
-  let afbForm;
   if (formDef) {
-    ({ form, afbForm } = await setupForm(formDef, {
-      pathname,
-      editMode: block.classList.contains('edit-mode'),
-    }));
-    // In Universal Editor (instrumented block) keep the JSON source in the DOM, hidden:
-    // the form field editing support reads the definition from it.
-    if (block.hasAttribute('data-aue-resource')) {
-      container.hidden = true;
-      container.after(form);
+    const submitProps = formDef?.properties?.['fd:submit'];
+    const actionType = submitProps?.actionName || formDef?.properties?.actionType;
+    const spreadsheetUrl = submitProps?.spreadsheet?.spreadsheetUrl
+      || formDef?.properties?.spreadsheetUrl;
+
+    if (actionType === 'spreadsheet' && spreadsheetUrl) {
+      // Check if we're in an iframe and use parent window path if available
+      const iframePath = window.frameElement ? window.parent.location.pathname
+        : window.location.pathname;
+      formDef.action = SUBMISSION_SERVICE + btoa(pathname || iframePath);
     } else {
-      container.replaceWith(form);
+      formDef.action = getSubmitBaseUrl() + (formDef.action || '');
     }
+    if (isDocumentBasedForm(formDef)) {
+      const transform = new DocBasedFormToAF();
+      formDef = transform.transform(formDef, { block });
+      source = 'sheet';
+      loadFormCustomStyles(formDef);
+      const response = await createForm(formDef, null, source);
+      form = response?.form;
+      const docRuleEngine = await import('./rules-doc/index.js');
+      docRuleEngine.default(formDef, form);
+      rules = false;
+    } else {
+      loadFormCustomStyles(formDef);
+      afModule = await import('./rules/index.js');
+      addRequestContextToForm(formDef);
+      if (afModule && afModule.initAdaptiveForm && !block.classList.contains('edit-mode')) {
+        form = await afModule.initAdaptiveForm(formDef, createForm);
+      } else {
+        form = await createFormForAuthoring(formDef);
+      }
+    }
+    form.dataset.redirectUrl = formDef.redirectUrl || '';
+    form.dataset.thankYouMsg = formDef.thankYouMsg || '';
+    form.dataset.action = formDef.action || pathname?.split('.json')[0];
+    form.dataset.source = source;
+    form.dataset.rules = rules;
+    form.dataset.id = formDef.id;
+    if (source === 'aem' && formDef.properties && formDef.properties['fd:path']) {
+      form.dataset.formpath = formDef.properties['fd:path'];
+    }
+    container.replaceWith(form);
   }
-  return { form, afbForm };
 }
