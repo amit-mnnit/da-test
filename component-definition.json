@@ -7,32 +7,52 @@
         {
           "title": "Text",
           "id": "text",
-          "model": "text",
           "plugins": {
-            "da": {
-              "name": "text",
-              "type": "text"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/text/v1/text",
+                "template": {}
+              }
+            }
+          }
+        },
+        {
+          "title": "Title",
+          "id": "title",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/title/v1/title",
+                "template": {
+                  "model": "title"
+                }
+              }
             }
           }
         },
         {
           "title": "Image",
           "id": "image",
-          "model": "image",
           "plugins": {
-            "da": {
-              "name": "image",
-              "type": "image",
-              "fields": [
-                {
-                  "name": "image",
-                  "selector": "img[src]"
-                },
-                {
-                  "name": "imageAlt",
-                  "selector": "img[alt]"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/image/v1/image",
+                "template": {}
+              }
+            }
+          }
+        },
+        {
+          "title": "Button",
+          "id": "button",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/button/v1/button",
+                "template": {
+                  "model": "button"
                 }
-              ]
+              }
             }
           }
         }
@@ -46,12 +66,15 @@
           "title": "Section",
           "id": "section",
           "plugins": {
-            "da": {
-              "unsafeHTML": "<div></div>"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "model": "section"
+                }
+              }
             }
-          },
-          "filter": "section",
-          "model": "section"
+          }
         }
       ]
     },
@@ -60,612 +83,605 @@
       "id": "blocks",
       "components": [
         {
-          "title": "Accordion",
-          "id": "accordion",
-          "model": "accordion",
-          "filter": "accordion",
-          "plugins": {
-            "da": {
-              "name": "accordion",
-              "rows": 1,
-              "columns": 2
-            }
-          }
-        },
-        {
-          "title": "Accordion Item",
-          "id": "accordion-item",
-          "model": "accordion-item",
-          "plugins": {
-            "da": {
-              "name": "accordion-item",
-              "rows": 2,
-              "columns": 0,
-              "fields": [
-                {
-                  "name": "summary",
-                  "selector": "div:nth-child(1)"
-                },
-                {
-                  "name": "text",
-                  "selector": "div:nth-child(2)"
-                }
-              ]
-            }
-          }
-        },
-        {
           "title": "Cards",
           "id": "cards",
-          "model": "cards",
-          "filter": "cards",
           "plugins": {
-            "da": {
-              "rows": 1,
-              "columns": 2
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Cards",
+                  "filter": "cards"
+                }
+              }
             }
           }
         },
         {
           "title": "Card",
           "id": "card",
-          "model": "card",
           "plugins": {
-            "da": {
-              "rows": 1,
-              "columns": 2,
-              "fields": [
-                {
-                  "name": "image",
-                  "selector": "div:nth-child(1)>picture>img[src]"
-                },
-                {
-                  "name": "imageAlt",
-                  "selector": "div:nth-child(1)>picture>img[alt]"
-                },
-                {
-                  "name": "text",
-                  "selector": "div:nth-child(2)"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Card",
+                  "model": "card"
                 }
-              ]
-            }
-          }
-        },
-        {
-          "title": "Carousel",
-          "id": "carousel",
-          "model": "carousel",
-          "filter": "carousel",
-          "plugins": {
-            "da": {
-              "rows": 1,
-              "columns": 1
-            }
-          }
-        },
-        {
-          "title": "Carousel Slide",
-          "id": "carousel-item",
-          "model": "carousel-item",
-          "plugins": {
-            "da": {
-              "rows": 1,
-              "columns": 1,
-              "fields": [
-                {
-                  "name": "backgroundImage",
-                  "selector": "div:nth-child(1)>picture>img[src]"
-                },
-                {
-                  "name": "backgroundImageAlt",
-                  "selector": "div:nth-child(1)>picture>img[alt]"
-                },
-                {
-                  "name": "text",
-                  "selector": "div:nth-child(2)"
-                }
-              ]
+              }
             }
           }
         },
         {
           "title": "Columns",
           "id": "columns",
-          "model": "columns",
-          "filter": "columns",
           "plugins": {
-            "da": {
-              "name": "columns",
-              "rows": 1,
-              "columns": 2,
-              "behaviour": "columns"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/columns/v1/columns",
+                "template": {
+                  "columns": "2",
+                  "rows": "1"
+                }
+              }
             }
           }
         },
         {
-          "title": "Columns Row",
-          "id": "columns-row",
-          "model": "columns-row",
-          "filter": "columns-row",
+          "title": "Embed Adaptive Form",
+          "id": "embed-adaptive-form",
           "plugins": {
-            "da": {
-              "name": "columns-row",
-              "behaviour": "columns-row"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Embed Adaptive Form",
+                  "model": "embed-adaptive-form"
+                }
+              }
             }
           }
         },
         {
-          "title": "Columns Cell",
-          "id": "columns-cell",
-          "model": "columns-cell",
-          "filter": "columns-cell",
-          "plugins": {
-            "da": {
-              "unsafeHTML": "<div></div>",
-              "behaviour": "columns-cell"
-            }
-          }
-        },
-        {
-          "title": "Form",
+          "title": "Adaptive Form",
           "id": "form",
-          "model": "form-settings",
           "plugins": {
-            "da": {
-              "unsafeHTML": "<div class=\"form\"><div><div><pre><code>{\"adaptiveform\":\"0.10.0\",\"metadata\":{\"grammar\":\"json-formula-1.0.0\",\"version\":\"1.0.0\"},\"items\":[]}</code></pre></div></div></div>",
-              "fields": [
-                {
-                  "name": "title",
-                  "selector": ".json-prop-title > div"
-                },
-                {
-                  "name": "properties.fd:submit.actionName",
-                  "selector": ".json-prop-properties_fd_submit_actionName > div"
-                },
-                {
-                  "name": "properties.fd:submit.configUrl",
-                  "selector": ".json-prop-properties_fd_submit_configUrl > div"
-                },
-                {
-                  "name": "action",
-                  "selector": ".json-prop-action > div"
-                },
-                {
-                  "name": "thankYouMsg",
-                  "selector": ".json-prop-thankYouMsg > div"
-                },
-                {
-                  "name": "redirectUrl",
-                  "selector": ".json-prop-redirectUrl > div"
+            "xwalk": {
+              "page": {
+                "resourceType": "fd/franklin/components/form/v1/form",
+                "template": {
+                  "fieldType": "form",
+                  "fd:version": "2.1"
                 }
-              ]
-            }
-          }
-        },
-        {
-          "title": "Fragment",
-          "id": "fragment",
-          "model": "fragment",
-          "plugins": {
-            "da": {
-              "unsafeHTML": "<div class=\"fragment\"><div><div><p><a href=\"\">Fragment URL</a></p></div></div></div>",
-              "fields": [
-                {
-                  "name": "url",
-                  "selector": "div>div>p>a[href]"
-                },
-                {
-                  "name": "urlText",
-                  "selector": "div>div>p>a"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "title": "Hero",
-          "id": "hero",
-          "model": "hero",
-          "plugins": {
-            "da": {
-              "unsafeHTML": "<div class=\"hero\"><div><div><picture><source type=\"image/webp\" srcset=\"\"><source type=\"image/jpeg\" srcset=\"\"><img loading=\"lazy\"></picture><h1></h1></div></div></div>",
-              "fields": [
-                {
-                  "name": "image",
-                  "selector": "div>div>picture>img[src]"
-                },
-                {
-                  "name": "imageAlt",
-                  "selector": "div>div>picture>img[alt]"
-                },
-                {
-                  "name": "text",
-                  "selector": "div>div>h1"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "title": "Quote",
-          "id": "quote",
-          "model": "quote",
-          "plugins": {
-            "da": {
-              "name": "quote",
-              "rows": 1,
-              "columns": 1,
-              "fields": [
-                {
-                  "name": "quote",
-                  "selector": "div:nth-child(1)>div"
-                },
-                {
-                  "name": "author",
-                  "selector": "div:nth-child(2)>div"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "title": "Search",
-          "id": "search",
-          "model": "search",
-          "plugins": {
-            "da": {
-              "name": "search",
-              "rows": 1,
-              "columns": 1,
-              "fields": [
-                {
-                  "name": "searchUrl",
-                  "selector": "div>div>p>a[href]"
-                },
-                {
-                  "name": "searchUrlText",
-                  "selector": "div>div>p>a"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "title": "Table",
-          "id": "table",
-          "model": "table",
-          "filter": "table",
-          "plugins": {
-            "da": {
-              "name": "table",
-              "rows": 1,
-              "columns": 1,
-              "fields": [
-                {
-                  "name": "table",
-                  "selector": "div>div"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "title": "Tabs",
-          "id": "tabs",
-          "model": "tabs",
-          "filter": "tabs",
-          "plugins": {
-            "da": {
-              "columns": 1,
-              "rows": 2
-            }
-          }
-        },
-        {
-          "title": "Tabs Item",
-          "id": "tabs-item",
-          "model": "tabs-item",
-          "plugins": {
-            "da": {
-              "columns": 0,
-              "rows": 2,
-              "fields": [
-                {
-                  "name": "name",
-                  "selector": "div:nth-child(1)"
-                },
-                {
-                  "name": "content",
-                  "selector": "div:nth-child(2)"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "title": "Video",
-          "id": "video",
-          "model": "video",
-          "plugins": {
-            "da": {
-              "name": "video",
-              "rows": 1,
-              "columns": 1,
-              "fields": [
-                {
-                  "name": "videoUrl",
-                  "selector": "div>div>p>a[href]"
-                },
-                {
-                  "name": "videoUrlText",
-                  "selector": "div>div>p>a"
-                },
-                {
-                  "name": "posterImage",
-                  "selector": "div>div>picture>img[src]"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "title": "Adaptive Form Components",
-      "id": "form-components",
-      "components": [
-        {
-          "title": "Captcha (Invisible)",
-          "id": "captcha",
-          "model": "captcha",
-          "plugins": {
-            "da": {
-              "type": "key-value-block"
-            }
-          }
-        },
-        {
-          "title": "Checkbox group",
-          "id": "checkbox-group",
-          "model": "checkbox-group",
-          "plugins": {
-            "da": {
-              "type": "key-value-block"
-            }
-          }
-        },
-        {
-          "title": "Checkbox",
-          "id": "checkbox",
-          "model": "checkbox",
-          "plugins": {
-            "da": {
-              "type": "key-value-block"
-            }
-          }
-        },
-        {
-          "title": "Date Input",
-          "id": "date-input",
-          "model": "date-input",
-          "plugins": {
-            "da": {
-              "type": "key-value-block"
-            }
-          }
-        },
-        {
-          "title": "Dropdown List",
-          "id": "drop-down",
-          "model": "drop-down",
-          "plugins": {
-            "da": {
-              "type": "key-value-block"
-            }
-          }
-        },
-        {
-          "title": "Email",
-          "id": "email",
-          "model": "email",
-          "plugins": {
-            "da": {
-              "type": "key-value-block"
-            }
-          }
-        },
-        {
-          "title": "File Attachment",
-          "id": "file-input",
-          "model": "file-input",
-          "plugins": {
-            "da": {
-              "type": "key-value-block"
-            }
-          }
-        },
-        {
-          "title": "Accordion",
-          "id": "form-accordion",
-          "model": "form-accordion",
-          "filter": "form-fields",
-          "plugins": {
-            "da": {
-              "type": "key-value-block"
+              }
             }
           }
         },
         {
           "title": "Button",
           "id": "form-button",
-          "model": "form-button",
           "plugins": {
-            "da": {
-              "type": "key-value-block"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/button/v1/button",
+                "template": {
+                  "jcr:title": "Button",
+                  "fieldType": "button"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Checkbox group",
+          "id": "checkbox-group",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/checkboxgroup/v1/checkboxgroup",
+                "template": {
+                  "jcr:title": "Checkbox Group",
+                  "fieldType": "checkbox-group",
+                  "enum": [
+                    "0",
+                    "1"
+                  ],
+                  "enumNames": [
+                    "Item 1",
+                    "Item 2"
+                  ],
+                  "orientation": "horizontal",
+                  "type": "string[]"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Checkbox",
+          "id": "checkbox",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/checkbox/v1/checkbox",
+                "template": {
+                  "jcr:title": "Checkbox",
+                  "fieldType": "checkbox",
+                  "checkedValue": "on"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Date Input",
+          "id": "date-input",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/datepicker/v1/datepicker",
+                "template": {
+                  "jcr:title": "Date Input",
+                  "fieldType": "date-input"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Dropdown List",
+          "id": "drop-down",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/dropdown/v1/dropdown",
+                "template": {
+                  "jcr:title": "Drop Down List",
+                  "fieldType": "drop-down",
+                  "enum": [
+                    "0",
+                    "1"
+                  ],
+                  "enumNames": [
+                    "Item 1",
+                    "Item 2"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Email",
+          "id": "email",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/emailinput/v1/emailinput",
+                "template": {
+                  "jcr:title": "Email Input",
+                  "fieldType": "email"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "File Attachment",
+          "id": "file-input",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/fileinput/v2/fileinput",
+                "template": {
+                  "jcr:title": "File Attachment",
+                  "fieldType": "file-input",
+                  "accept": [
+                    "audio/*",
+                    "video/*",
+                    "image/*",
+                    "text/*",
+                    "application/pdf"
+                  ],
+                  "buttonText": "Attach",
+                  "dragDropText": "Drag and Drop To Upload",
+                  "type": "file"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Form Fragment",
+          "id": "form-fragment",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/fragment/v1/fragment",
+                "template": {
+                  "jcr:title": "Fragment",
+                  "fieldType": "panel",
+                  "minOccur": 1
+                }
+              }
             }
           }
         },
         {
           "title": "Image",
           "id": "form-image",
-          "model": "form-image",
           "plugins": {
-            "da": {
-              "type": "key-value-block"
-            }
-          }
-        },
-        {
-          "title": "Modal",
-          "id": "form-modal",
-          "model": "form-modal",
-          "filter": "form-fields",
-          "plugins": {
-            "da": {
-              "type": "key-value-block"
-            }
-          }
-        },
-        {
-          "title": "Reset",
-          "id": "form-reset-button",
-          "model": "form-reset-button",
-          "plugins": {
-            "da": {
-              "type": "key-value-block"
-            }
-          }
-        },
-        {
-          "title": "Submit",
-          "id": "form-submit-button",
-          "model": "form-submit-button",
-          "plugins": {
-            "da": {
-              "type": "key-value-block"
-            }
-          }
-        },
-        {
-          "title": "Multiline Input",
-          "id": "multiline-input",
-          "model": "multiline-input",
-          "plugins": {
-            "da": {
-              "type": "key-value-block"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/image/v1/image",
+                "template": {
+                  "jcr:title": "Image",
+                  "fieldType": "image"
+                }
+              }
             }
           }
         },
         {
           "title": "Number Input",
           "id": "number-input",
-          "model": "number-input",
           "plugins": {
-            "da": {
-              "type": "key-value-block"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/numberinput/v1/numberinput",
+                "template": {
+                  "jcr:title": "Number Input",
+                  "fieldType": "number-input"
+                }
+              }
             }
           }
         },
         {
           "title": "Panel",
           "id": "panel",
-          "model": "panel",
-          "filter": "form-fields",
           "plugins": {
-            "da": {
-              "type": "key-value-block"
-            }
-          }
-        },
-        {
-          "title": "Password",
-          "id": "password",
-          "model": "password",
-          "plugins": {
-            "da": {
-              "type": "key-value-block"
-            }
-          }
-        },
-        {
-          "title": "Text",
-          "id": "plain-text",
-          "model": "plain-text",
-          "plugins": {
-            "da": {
-              "type": "key-value-block"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer",
+                "template": {
+                  "jcr:title": "Panel",
+                  "fieldType": "panel",
+                  "minOccur": 1
+                }
+              }
             }
           }
         },
         {
           "title": "Radio Group",
           "id": "radio-group",
-          "model": "radio-group",
           "plugins": {
-            "da": {
-              "type": "key-value-block"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/radiobutton/v1/radiobutton",
+                "template": {
+                  "jcr:title": "Radio Group",
+                  "fieldType": "radio-group",
+                  "enum": [
+                    "0",
+                    "1"
+                  ],
+                  "enumNames": [
+                    "Item 1",
+                    "Item 2"
+                  ],
+                  "orientation": "horizontal"
+                }
+              }
             }
           }
         },
         {
-          "title": "Range",
-          "id": "range",
-          "model": "range",
+          "title": "Captcha (Invisible)",
+          "id": "captcha",
           "plugins": {
-            "da": {
-              "type": "key-value-block"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/recaptcha/v1/recaptcha",
+                "template": {
+                  "jcr:title": "Captcha (Invisible)",
+                  "fieldType": "captcha"
+                }
+              }
             }
           }
         },
         {
-          "title": "Rating",
-          "id": "rating",
-          "model": "rating",
+          "title": "Reset",
+          "id": "form-reset-button",
           "plugins": {
-            "da": {
-              "type": "key-value-block"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/actions/reset/v1/reset",
+                "template": {
+                  "jcr:title": "Reset",
+                  "buttonType": "reset",
+                  "fieldType": "button"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Submit",
+          "id": "form-submit-button",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/actions/submit/v1/submit",
+                "template": {
+                  "jcr:title": "Submit",
+                  "buttonType": "submit",
+                  "fieldType": "button"
+                }
+              }
             }
           }
         },
         {
           "title": "Telephone input",
           "id": "telephone-input",
-          "model": "telephone-input",
           "plugins": {
-            "da": {
-              "type": "key-value-block"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/telephoneinput/v1/telephoneinput",
+                "template": {
+                  "jcr:title": "Telephone Input",
+                  "fieldType": "text-input"
+                }
+              }
             }
           }
         },
         {
           "title": "Text Input",
           "id": "text-input",
-          "model": "text-input",
           "plugins": {
-            "da": {
-              "type": "key-value-block"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/textinput/v1/textinput",
+                "template": {
+                  "jcr:title": "Text Input",
+                  "fieldType": "text-input"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Text",
+          "id": "plain-text",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/text/v1/text",
+                "template": {
+                  "jcr:title": "Text",
+                  "fieldType": "plain-text",
+                  "textIsRich": true,
+                  "value": "Adaptive Form Text Component"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Accordion",
+          "id": "form-accordion",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer",
+                "template": {
+                  "jcr:title": "Accordion",
+                  "fieldType": "panel",
+                  "fd:viewType": "accordion",
+                  "minOccur": 1,
+                  "panel1": {
+                    "jcr:title": "Item 1",
+                    "fieldType": "panel",
+                    "sling:resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer"
+                  },
+                  "panel2": {
+                    "jcr:title": "Item 2",
+                    "fieldType": "panel",
+                    "sling:resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Modal",
+          "id": "form-modal",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer",
+                "template": {
+                  "jcr:title": "Modal",
+                  "fieldType": "panel",
+                  "fd:viewType": "modal",
+                  "visible": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Password",
+          "id": "password",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/textinput/v1/textinput",
+                "template": {
+                  "jcr:title": "Password",
+                  "fieldType": "text-input",
+                  "fd:viewType": "password"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Rating",
+          "id": "rating",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/numberinput/v1/numberinput",
+                "template": {
+                  "jcr:title": "Rating",
+                  "fieldType": "number-input",
+                  "fd:viewType": "rating"
+                }
+              }
             }
           }
         },
         {
           "title": "Terms and conditions",
           "id": "tnc",
-          "model": "tnc",
-          "filter": "form-fields",
           "plugins": {
-            "da": {
-              "type": "key-value-block"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/termsandconditions/v1/termsandconditions",
+                "template": {
+                  "jcr:title": "Terms and conditions",
+                  "fieldType": "panel",
+                  "fd:viewType": "tnc",
+                  "text": {
+                    "value": "Text related to the terms and conditions come here.",
+                    "sling:resourceType": "core/fd/components/form/text/v1/text",
+                    "fieldType": "plain-text",
+                    "textIsRich": true
+                  },
+                  "link": {
+                    "enum": [
+                      "dummy-link-1"
+                    ],
+                    "type": "string[]",
+                    "fd:viewType": "toggleable-link",
+                    "title": "I agree to the terms & conditions",
+                    "enumNames": [
+                      "Privacy policy."
+                    ],
+                    "sling:resourceType": "core/fd/components/form/checkboxgroup/v1/checkboxgroup",
+                    "fieldType": "checkbox-group",
+                    "fd:rules": {
+                      "jcr:primaryType": "nt:unstructured",
+                      "validationStatus": "valid"
+                    },
+                    "fd:events": {
+                      "jcr:primaryType": "nt:unstructured",
+                      "change": [
+                        "if(length($field.$value) == length($field.$enum), dispatchEvent($parent.approvalcheckbox, 'custom:setProperty', {enabled : true()}), {})"
+                      ]
+                    }
+                  },
+                  "approvalcheckbox": {
+                    "name": "approvalcheckbox",
+                    "jcr:title": "I agree to the terms & conditions.",
+                    "sling:resourceType": "core/fd/components/form/checkbox/v1/checkbox",
+                    "fieldType": "checkbox",
+                    "required": true,
+                    "type": "string",
+                    "enum": [
+                      "true"
+                    ]
+                  }
+                }
+              }
             }
           }
         },
         {
           "title": "Wizard",
           "id": "wizard",
-          "model": "wizard",
-          "filter": "form-fields",
           "plugins": {
-            "da": {
-              "type": "key-value-block"
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer",
+                "template": {
+                  "jcr:title": "Wizard",
+                  "fieldType": "panel",
+                  "fd:viewType": "wizard",
+                  "minOccur": 1,
+                  "panel1": {
+                    "jcr:title": "Item 1",
+                    "fieldType": "panel",
+                    "sling:resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer"
+                  },
+                  "panel2": {
+                    "jcr:title": "Item 2",
+                    "fieldType": "panel",
+                    "sling:resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Fragment",
+          "id": "fragment",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Fragment",
+                  "model": "fragment"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Hero",
+          "id": "hero",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Hero",
+                  "model": "hero"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "Custom Form Components",
+      "id": "custom-components",
+      "components": [
+        {
+          "title": "Range",
+          "id": "range",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/fd/components/form/numberinput/v1/numberinput",
+                "template": {
+                  "jcr:title": "Range",
+                  "fieldType": "number-input",
+                  "fd:viewType": "range",
+                  "enabled": true,
+                  "visible": true
+                }
+              }
             }
           }
         }

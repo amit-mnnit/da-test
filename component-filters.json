@@ -8,28 +8,16 @@
   {
     "id": "section",
     "components": [
-      "accordion",
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
       "cards",
-      "carousel",
       "columns",
-      "embed",
       "fragment",
       "form",
-      "hero",
-      "image",
-      "quote",
-      "search",
-      "tabs",
-      "table",
-      "text",
-      "video",
-      "product-recommendations"
-    ]
-  },
-  {
-    "id": "accordion",
-    "components": [
-      "accordion-item"
+      "embed-adaptive-form"
     ]
   },
   {
@@ -39,49 +27,22 @@
     ]
   },
   {
-    "id": "carousel",
-    "components": [
-      "carousel-item"
-    ]
-  },
-  {
     "id": "columns",
     "components": [
-      "columns-row"
+      "column"
     ]
   },
   {
-    "id": "columns-row",
-    "components": []
-  },
-  {
-    "id": "columns-cell",
+    "id": "column",
     "components": [
       "text",
-      "image"
+      "image",
+      "button",
+      "title"
     ]
   },
   {
-    "id": "table",
-    "rte": {
-      "toolbar": {
-        "insert": [
-          "table"
-        ],
-        "sections": [
-          "insert"
-        ]
-      }
-    }
-  },
-  {
-    "id": "tabs",
-    "components": [
-      "tabs-item"
-    ]
-  },
-  {
-    "id": "form-fields",
+    "id": "form",
     "components": [
       "captcha",
       "checkbox",
@@ -92,22 +53,22 @@
       "file-input",
       "form-accordion",
       "form-button",
+      "form-fragment",
       "form-image",
       "form-modal",
       "form-reset-button",
       "form-submit-button",
-      "multiline-input",
       "number-input",
       "panel",
       "password",
       "plain-text",
       "radio-group",
-      "range",
       "rating",
       "telephone-input",
       "text-input",
       "tnc",
-      "wizard"
+      "wizard",
+      "range"
     ]
   }
 ]
