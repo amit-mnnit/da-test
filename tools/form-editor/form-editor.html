@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Form Editor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="icon" href="data:,">
+    <script src="https://da.live/nx/utils/sdk.js" type="module"></script>
+    <script src="/tools/form-editor/form-editor.js" type="module"></script>
+    <link rel="stylesheet" href="/tools/form-editor/form-editor.css">
+  </head>
+  <body>
+    <form class="fe-host-bar" id="load-form">
+      <label for="form-path">Form path</label>
+      <span class="fe-host-prefix" id="form-prefix"></span>
+      <input id="form-path" name="path" type="text" value="/forms/my-form" spellcheck="false" required>
+      <span class="fe-host-suffix">.json</span>
+      <button type="submit">Load</button>
+      <span class="fe-host-status" id="status" role="status"></span>
+    </form>
+    <main id="editor"></main>
+  </body>
+</html>
