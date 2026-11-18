@@ -24,11 +24,20 @@ function normalizePath(raw) {
 }
 
 function appUrl() {
-  // https://main--{site}--{org}.aem.page/tools/x/y.html -> https://da.live/app/{org}/{site}/tools/x/y
-  const { hostname, pathname } = window.location;
-  const [, site, org] = hostname.split('.')[0].split('--');
+  // https://{ref}--{site}--{org}.aem.page/tools/x/y.html -> https://da.live/app/{org}/{site}/tools/x/y
+  const { hostname, pathname, search } = window.location;
+  const [ref, site, org] = hostname.split('.')[0].split('--');
   if (!site || !org || !/\.aem\.(page|live)$/.test(hostname)) return null;
-  return `https://da.live/app/${org}/${site}${pathname.replace(/\.html$/, '')}`;
+  const url = new URL(`https://da.live/app/${org}/${site}${pathname.replace(/\.html$/, '')}${search}`);
+  if (ref !== 'main') url.searchParams.set('ref', ref);
+  return url.toString();
+}
+
+// Opened directly rather than inside Experience Workspace: hand off to the DA app
+// shell, which frames this page and provides the SDK context and token.
+const daAppUrl = appUrl();
+if (window.top === window && daAppUrl) {
+  window.location.replace(daAppUrl);
 }
 
 // Attach immediately so submitting never falls back to a full page reload.
@@ -117,10 +126,9 @@ window.addEventListener('beforeunload', (e) => {
   const org = result?.context?.org;
   const site = result?.context?.repo ?? result?.context?.site;
   if (!org || !site) {
-    const url = appUrl();
     onLoadRequest = () => {};
     setStatus(
-      `Not connected to Experience Workspace, so forms can't be loaded or saved. Open ${url ?? 'this tool via https://da.live/app/{org}/{site}/<tool-path>'}`,
+      `Not connected to Experience Workspace, so forms can't be loaded or saved. Open ${daAppUrl ?? 'this tool via https://da.live/app/{org}/{site}/<tool-path>'}`,
       'error',
     );
     return;
